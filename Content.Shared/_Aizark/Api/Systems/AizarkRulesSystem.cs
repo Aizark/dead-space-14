@@ -1,5 +1,5 @@
 using Content.Shared._Aizark.Api.Components;
-using Content.Shared.Trigger.Components;
+using Content.Shared.Trigger;
 
 namespace Content.Shared._Aizark.Api.Systems;
 
