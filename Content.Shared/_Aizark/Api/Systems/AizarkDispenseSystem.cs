@@ -2,7 +2,7 @@ using System.Linq;
 using Content.Shared._Aizark.Api.Components;
 using Content.Shared.EntityTable;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Trigger.Components;
+using Content.Shared.Trigger;
 using Robust.Shared.Network;
 
 namespace Content.Shared._Aizark.Api.Systems;
