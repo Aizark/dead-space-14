@@ -32,7 +32,7 @@ public sealed class AizarkTriggerTest
             foreach (var uid in new[] { first, second })
             {
                 var variables = entities.AddComponent<AizarkVariablesComponent>(uid);
-                variables.Values["remaining"] = 3;
+                variables.Values["remaining"] = 10;
 
                 var condition = entities.AddComponent<AizarkVariableConditionComponent>(uid);
                 condition.Variable = "remaining";
@@ -45,7 +45,7 @@ public sealed class AizarkTriggerTest
                 effect.Value = 1;
             }
 
-            for (var count = 2; count >= 0; count--)
+            for (var count = 9; count >= 0; count--)
             {
                 Assert.That(triggers.Trigger(first), Is.True);
                 Assert.That(entities.GetComponent<AizarkVariablesComponent>(first).Values["remaining"],
@@ -54,7 +54,7 @@ public sealed class AizarkTriggerTest
 
             Assert.That(triggers.Trigger(first), Is.False, "Использования должны закончиться.");
             Assert.That(entities.GetComponent<AizarkVariablesComponent>(second).Values["remaining"],
-                Is.EqualTo(3), "Независимый предмет не должен расходовать общий запас.");
+                Is.EqualTo(10), "Независимый предмет не должен расходовать общий запас.");
 
             entities.DeleteEntity(first);
             entities.DeleteEntity(second);
