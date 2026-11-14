@@ -1,0 +1,5 @@
+- type: vendingMachineExtension
+  id: AizarkTitanCandyStock
+  targetPack: GetmoreChocolateCorpInventory
+  startingInventory:
+    FoodAizarkTitanCandyBoxClosed: 10

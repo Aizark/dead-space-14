@@ -1,0 +1,11 @@
+Titan Candy Artwork — Project-Specific Permission
+
+Copyright (c) 2026 Aizark (Discord: Aizark). All rights reserved.
+
+Aizark grants the DeadSpace SS14 project (https://github.com/dead-space-server/dead-space-14) a perpetual, worldwide, royalty-free, non-exclusive, irrevocable permission to use, reproduce, modify, distribute and publicly display the Titan Candy artwork as part of DeadSpace, including its game clients, server assets, updates, releases and promotional material relating to DeadSpace.
+
+This permission also covers contributors making changes solely for contribution to DeadSpace. It does not permit separate SS14 projects, other servers, standalone asset packs, or unrelated products to use or distribute the artwork. The permission may not be sublicensed for such uses.
+
+Attribution: Aizark (Discord: Aizark). Retain this notice with source assets where practicable.
+
+This is a custom license, not a Creative Commons or open-source artwork license. No rights beyond those expressly stated are granted, except rights that may separately apply under law or GitHub's Terms of Service.

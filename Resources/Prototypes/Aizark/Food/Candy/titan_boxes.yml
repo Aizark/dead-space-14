@@ -1,0 +1,73 @@
+- type: entity
+  id: FoodAizarkTitanCandyBoxClosed
+  parent: [BaseStorageItem, BaseBagOpenClose]
+  name: коробка конфет Titan
+  description: Ассорти фруктовых карамелек от местного производителя. Шесть вкусов, яркая упаковка и обещание, что даже в дальнем космосе найдётся место для чего-нибудь сладкого.
+  components:
+  - type: Sprite
+    sprite: Aizark/Food/Candy/titan_candy.rsi
+    layers:
+    - state: box_closed
+      map: ["closeLayer"]
+    - state: box_open
+      map: ["openLayer"]
+      visible: false
+  - type: Item
+    size: Tiny
+    shape:
+    - 0,0,0,1
+  - type: Storage
+    grid:
+    - 0,0,4,1
+    maxItemSize: Tiny
+    whitelist:
+      tags:
+      - AizarkTitanCandy
+      - Pill
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:NestedSelector
+        rolls: !type:ConstantNumberSelector
+          value: 10
+        tableId: AizarkTitanCandyAssortment
+  - type: StaticPrice
+    price: 35
+
+- type: entity
+  id: FoodAizarkTitanCandyBoxOpen
+  parent: FoodAizarkTitanCandyBoxClosed
+  name: коробка конфет Titan
+  description: Ассорти фруктовых карамелек от местного производителя. Шесть вкусов, яркая упаковка и обещание, что даже в дальнем космосе найдётся место для чего-нибудь сладкого.
+
+- type: entity
+  id: FoodAizarkTitanCandyBoxEmpty
+  parent: BaseItem
+  name: пустая коробка конфет Titan
+  description: В коробочке больше нет конфет. Остались лишь сладкий аромат и картон.
+  components:
+  - type: Sprite
+    sprite: Aizark/Food/Candy/titan_candy.rsi
+    state: box_empty
+  - type: Item
+    size: Tiny
+    shape:
+    - 0,0,0,1
+  - type: StaticPrice
+    price: 0
+
+- type: entityTable
+  id: AizarkTitanCandyAssortment
+  table: !type:GroupSelector
+    children:
+    - id: FoodAizarkTitanCandyRed
+      weight: 30
+    - id: FoodAizarkTitanCandyOrange
+      weight: 30
+    - id: FoodAizarkTitanCandyGreen
+      weight: 15
+    - id: FoodAizarkTitanCandyBlue
+      weight: 15
+    - id: FoodAizarkTitanCandyPurple
+      weight: 8
+    - id: FoodAizarkTitanCandyYellow
+      weight: 2

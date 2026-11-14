@@ -1,0 +1,82 @@
+- type: entity
+  id: FoodAizarkTitanCandyBase
+  parent: FoodInjectableBase
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Aizark/Food/Candy/titan_candy.rsi
+  - type: Tag
+    tags:
+    - AizarkTitanCandy
+  - type: Item
+    size: Tiny
+    shape:
+    - 0,0,0,0
+  - type: FlavorProfile
+    flavors:
+    - sweet
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 13
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 1
+        - ReagentId: Nutriment
+          Quantity: 2
+  - type: StaticPrice
+    price: 3
+
+- type: entity
+  id: FoodAizarkTitanCandyRed
+  parent: FoodAizarkTitanCandyBase
+  name: красная конфета Titan
+  description: Прямоугольная ягодная карамель. Сначала чувствуется спелая клубника, а после — терпкая вишня.
+  components:
+  - type: Sprite
+    state: candy_red
+
+- type: entity
+  id: FoodAizarkTitanCandyOrange
+  parent: FoodAizarkTitanCandyBase
+  name: оранжевая конфета Titan
+  description: Круглая карамель со вкусом сочного мандарина, цедры и лёгкой кислинки.
+  components:
+  - type: Sprite
+    state: candy_orange
+
+- type: entity
+  id: FoodAizarkTitanCandyGreen
+  parent: FoodAizarkTitanCandyBase
+  name: зелёная конфета Titan
+  description: Овальная конфета с прохладным вкусом зелёного яблока и едва заметной мяты.
+  components:
+  - type: Sprite
+    state: candy_green
+
+- type: entity
+  id: FoodAizarkTitanCandyBlue
+  parent: FoodAizarkTitanCandyBase
+  name: голубая конфета Titan
+  description: Вытянутая конфета с неожиданным вкусом ледяной черники и свежего морского воздуха.
+  components:
+  - type: Sprite
+    state: candy_blue
+
+- type: entity
+  id: FoodAizarkTitanCandyPurple
+  parent: FoodAizarkTitanCandyBase
+  name: фиолетовая конфета Titan
+  description: Ромбовидная конфета: насыщенный виноград, лесные ягоды и пряное послевкусие.
+  components:
+  - type: Sprite
+    state: candy_purple
+
+- type: entity
+  id: FoodAizarkTitanCandyYellow
+  parent: FoodAizarkTitanCandyBase
+  name: жёлтая конфета Titan
+  description: Редкая конфета-звёздочка со вкусом мёда, ананаса и тёплого солнечного дня.
+  components:
+  - type: Sprite
+    state: candy_yellow

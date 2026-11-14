@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "license": "Custom (DeadSpace-only permission; see LICENSE.txt)",
+  "copyright": "Copyright (c) 2026 Aizark (Discord: Aizark). All rights reserved.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "box_closed"
+    },
+    {
+      "name": "box_open"
+    },
+    {
+      "name": "box_empty"
+    },
+    {
+      "name": "candy_red"
+    },
+    {
+      "name": "candy_orange"
+    },
+    {
+      "name": "candy_green"
+    },
+    {
+      "name": "candy_blue"
+    },
+    {
+      "name": "candy_purple"
+    },
+    {
+      "name": "candy_yellow"
+    }
+  ]
+}
