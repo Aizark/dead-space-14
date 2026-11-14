@@ -1,20 +1,26 @@
-# AizarkApi — composable trigger extensions
+# AizarkApi — расширения событий и триггеров Dead Space 14
 
-AizarkApi extends Content.Shared.Trigger without modifying TriggerSystem or RobustToolbox. It is a reusable dependency, **not** part of Titan candies. Content mods live in their own branches and prototype folders.
+**Назначение:** независимый от модов набор компонентов для триггеров, условий, числовых переменных и действий. Моды используют AizarkApi, но AizarkApi не ссылается на моды. Ветка основана на Dead Space 14 `master`; RobustToolbox и штатный TriggerSystem не изменены.
 
-## Implemented in this branch (initial, not yet build-verified)
+## Текущее содержимое
 
-- `AizarkVariables`: per-entity integer key/value state (networked component).
-- `AizarkVariableCondition`: comparison at `AttemptTriggerEvent`; missing variables fail closed.
-- `AizarkVariableEffect`: numeric mutation at `TriggerEvent`, server-authoritative.
-- `TargetUser`: optionally check/change the triggering user instead of the entity itself.
-- `Key`: gate each component on the existing trigger key.
+| Компонент | Назначение |
+|---|---|
+| `AizarkVariables` | Целочисленные переменные каждой отдельной сущности |
+| `AizarkVariableCondition` | Проверка переменной в `AttemptTriggerEvent` |
+| `AizarkVariableEffect` | Изменение переменной в `TriggerEvent` (только сервер) |
+| `AizarkRulesCondition` | Несколько правил AND / OR / NOT, сравнение между переменными себя и пользователя |
+| `AizarkSpawnToHandsOnTrigger` | Создать предмет по `EntityTable`, попытаться выдать в свободную руку, иначе оставить рядом |
+| `AizarkDispenseOnTrigger` | Выдавать из `EntityTable` с уменьшением запаса и необязательной заменой оболочки после последней выдачи |
 
-### Example: a finite-use device
+Все C#-компоненты и системы документированы русскими XML-комментариями.
+
+## Пример: счётчик
 
 ```yaml
 - type: entity
-  id: ExampleAizarkCounter
+  id: AizarkCounterExample
+  parent: BaseItem
   components:
   - type: AizarkVariables
     values:
@@ -30,21 +36,54 @@ AizarkApi extends Content.Shared.Trigger without modifying TriggerSystem or Robu
     value: 1
 ```
 
-**Important:** This counts uses only. Spawning and replacing the exhausted entity are not yet wired. Do **not** attach two effects whose relative execution order matters and assume subscription order. For candy, one dedicated orchestrating effect should atomically: (1) validate stock, (2) choose a single weighted prototype, (3) spawn it server-side, (4) try to put it into a user's free hand (fallback: at feet), (5) decrement stock, (6) replace box on zero. This effect should reuse generic AizarkApi services, not candy-specific code.
+## Пример: комбинация условий
 
-## Planned core
+```yaml
+  - type: AizarkRulesCondition
+    join: All
+    rules:
+    - variable: remaining
+      comparison: Greater
+      value: 0
+    - variable: permission
+      targetUser: true
+      comparison: GreaterOrEqual
+      otherVariable: clearance
+      otherTargetUser: false
+```
 
-- `AizarkSpawnToHandsOnTrigger`: a reusable effect with proto or entity-table selection, one spawn per activation, hands-first with floor fallback.
-- `AizarkReplaceOnTrigger`: server-only replacement while preserving item position when possible.
-- `AizarkVariableOperations`: multiple steps/conditions in a configurable list; explicit success/failure/empty keys.
-- Extensible target resolver for `Self`, `User`, and explicit event targets, with strict validation.
-- Automated tests: condition comparisons, missing keys, isolation between entities, zero and negative stock, saturation/overflow, divide by zero, server-only execution, dropping when both hands occupied, and chain behavior at 10th use.
+Правило с `targetUser: true` проверяет пользователя события, остальные — владельца компонента. `otherVariable` позволяет сравнить значение переменной с другой переменной вместо константы. Группа `join: Any` означает OR, `not: true` на отдельном правиле либо группе инвертирует результат.
 
-## Constraints
+## Пример: конечная выдача
 
-- Do not edit upstream trigger implementation or engine.
-- No global mutable variable store. Keys belong to individual entities.
-- Avoid attaching variable state to player entities unless explicitly needed; do not ship hidden information to clients.
-- Keep authoritative spawns and stock mutation on the server. No client prediction for weighted random entity tables.
-- Use distinct `Aizark` type names and `Content.Shared._Aizark.Api` namespaces to avoid conflicts during upstream merges.
-- Current first commit does **not** guarantee compilation or runtime behavior; validate with the project's build/tests before merging.
+К компонентам предмета добавьте `AizarkVariables` с `remaining: 10`, `TriggerOnUse`, а затем:
+
+```yaml
+  - type: AizarkDispenseOnTrigger
+    stockVariable: remaining
+    emptyPrototype: SomeEmptyShell
+    table: !type:GroupSelector
+      children:
+      - id: SomeItem
+```
+
+**Проверяйте синтаксис селектора под конкретную версию EntityTable**; этот фрагмент — схема настройки, а не проверенный прототип. Таблица должна возвращать ровно один предмет за срабатывание. Использование диспенсера и отдельного `AizarkVariableEffect` с уменьшением того же счётчика одновременно запрещено: запас изменится дважды.
+
+## Важные правила архитектуры
+
+1. AizarkApi не изменяет `Content.Shared.Trigger` или RobustToolbox.
+2. Нет глобальных переменных; ключи относятся к отдельным сущностям.
+3. `AizarkVariables` — сетевой компонент. **Не храните здесь секреты**, скрытые данные или права доступа; сервер должен отдельно проверять безопасность.
+4. Случайный выбор, создание предмета и изменение запаса осуществляются **только сервером**.
+5. Из-за обычного механизма ECS-подписок не полагайтесь на порядок нескольких эффектов `TriggerEvent`. Ограниченный диспенсер осуществляет выдачу и изменение запаса совместно.
+6. Текущее действие замены пустой оболочки создаёт новую сущность в координатах исходного предмета и удаляет старую. **Оно не обещает сохранения того же слота руки или контейнера**. Это нужно тестировать и при необходимости расширять.
+7. При невозможности положить предмет в руку он остаётся в координатах пользователя. Действие не выбрасывает уже удерживаемые предметы.
+8. Пропущенный числовой ключ блокирует обычную проверку. Составные `NOT`-условия следует применять к данным, гарантированно определённым у цели.
+
+## Проверка сборки
+
+14.11.2026: команда `dotnet build Content.Shared/Content.Shared.csproj` успешно прошла на отдельной копии Dead Space 14 (с оригинальным закреплённым RobustToolbox). Это **не является** доказательством корректности игрового поведения. Требуются серверные и интеграционные тесты: последовательные десять выдач, разные экземпляры одного предмета, занятые руки, отсутствие пользователя, пустая таблица и правильная замена оболочки.
+
+## Развитие
+
+Библиотека живёт в `feature/aizark-api`; моды (включая Titan Candies) разрабатываются отдельно и подключают готовые возможности. Для изменения логики нужно расширять API универсально, а не вводить в неё названия конкретных предметов.
