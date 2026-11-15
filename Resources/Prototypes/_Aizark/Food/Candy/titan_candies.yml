@@ -1,0 +1,87 @@
+- type: entity
+  id: FoodAizarkTitanCandyBase
+  parent: FoodInjectableBase
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Aizark/Food/Candy/titan_candy.rsi
+  - type: Tag
+    tags:
+    - AizarkTitanCandy
+  - type: Item
+    size: Tiny
+    shape:
+    - 0,0,0,0
+  - type: FlavorProfile
+    flavors:
+    - sweet
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 11
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1
+  # Конфета съедается целиком за один раз, включая все добавленные реагенты.
+  - type: Edible
+    transferAmount: null
+  - type: StaticPrice
+    price: 3
+
+- type: entity
+  id: FoodAizarkTitanCandyRed
+  parent: FoodAizarkTitanCandyBase
+  name: красная конфета «Титан»
+  description: Прямоугольная ягодная карамель. Сначала чувствуется спелая клубника, а после — терпкая вишня.
+  components:
+  - type: Sprite
+    state: candy_red
+
+- type: entity
+  id: FoodAizarkTitanCandyOrange
+  parent: FoodAizarkTitanCandyBase
+  name: оранжевая конфета «Титан»
+  description: Круглая карамель со вкусом сочного мандарина, цедры и лёгкой кислинки.
+  components:
+  - type: Sprite
+    state: candy_orange
+
+- type: entity
+  id: FoodAizarkTitanCandyGreen
+  parent: FoodAizarkTitanCandyBase
+  name: зелёная конфета «Титан»
+  description: Овальная конфета с прохладным вкусом зелёного яблока и едва заметной мяты.
+  components:
+  - type: Sprite
+    state: candy_green
+
+- type: entity
+  id: FoodAizarkTitanCandyBlue
+  parent: FoodAizarkTitanCandyBase
+  name: голубая конфета «Титан»
+  description: Вытянутая конфета с неожиданным вкусом ледяной черники и свежего морского воздуха.
+  components:
+  - type: Sprite
+    state: candy_blue
+
+- type: entity
+  id: FoodAizarkTitanCandyPurple
+  parent: FoodAizarkTitanCandyBase
+  name: фиолетовая конфета «Титан»
+  description: "Ромбовидная конфета: насыщенный виноград, лесные ягоды и пряное послевкусие."
+  components:
+  - type: Sprite
+    state: candy_purple
+
+- type: entity
+  id: FoodAizarkTitanCandyYellow
+  parent: FoodAizarkTitanCandyBase
+  name: жёлтая конфета «Титан»
+  description: Редкая конфета-звёздочка со вкусом мёда, ананаса и тёплого солнечного дня.
+  components:
+  - type: Sprite
+    state: candy_yellow
+
+# Тег объявлен рядом с прототипами конфет, которые его используют.
+- type: Tag
+  id: AizarkTitanCandy

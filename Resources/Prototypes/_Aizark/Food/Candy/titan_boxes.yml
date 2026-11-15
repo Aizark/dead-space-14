@@ -1,0 +1,102 @@
+# Запечатанная упаковка: инвентарь отсутствует до вскрытия, как у обычных снеков.
+- type: entity
+  id: FoodAizarkTitanCandyBoxClosed
+  parent: BaseItem
+  name: Конфеты «Титан»
+  description: Ассорти фруктовых карамелек разных цветов, форм и вкусов. Особенно любимы теми, кто не слишком дружит с буквами, зато отлично разбирается в сладком.
+  components:
+  - type: Sprite
+    sprite: _Aizark/Food/Candy/titan_candy.rsi
+    state: box_closed
+  - type: Item
+    size: Tiny
+    shape:
+    - 0,0,0,1
+  - type: SpawnItemsOnUse
+    items:
+    - id: FoodAizarkTitanCandyBoxOpen
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+  - type: StaticPrice
+    price: 35
+
+# Открытая упаковка хранит конфеты и таблетки в обычном инвентаре.
+- type: entity
+  id: FoodAizarkTitanCandyBoxOpen
+  parent: BaseStorageItem
+  categories: [HideSpawnMenu]
+  name: Конфеты «Титан»
+  description: Ассорти фруктовых карамелек разных цветов, форм и вкусов. Особенно любимы теми, кто не слишком дружит с буквами, зато отлично разбирается в сладком.
+  components:
+  - type: Sprite
+    sprite: _Aizark/Food/Candy/titan_candy.rsi
+    layers:
+    - state: box_open
+    - state: box_empty
+      map: ["box_empty"]
+      visible: false
+  - type: Item
+    size: Tiny
+    shape:
+    - 0,0,0,1
+  - type: Storage
+    grid:
+    - 0,0,4,1
+    maxItemSize: Tiny
+    whitelist:
+      tags:
+      - AizarkTitanCandy
+      - Pill
+  # Десять случайных конфет выбираются при появлении открытой коробки.
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:NestedSelector
+        rolls: !type:ConstantNumberSelector
+          value: 10
+        tableId: AizarkTitanCandyAssortment
+  - type: Appearance
+  # Пустой спрайт показывается, когда не осталось ни конфет, ни таблеток.
+  - type: ItemMapper
+    containerWhitelist: [storagebase]
+    mapLayers:
+      box_empty:
+        minCount: 0
+        maxCount: 0
+        whitelist:
+          tags: [AizarkTitanCandy, Pill]
+  - type: StaticPrice
+    price: 35
+
+- type: entity
+  id: FoodAizarkTitanCandyBoxEmpty
+  categories: [HideSpawnMenu]
+  parent: BaseItem
+  name: пустая коробка конфет Титан
+  description: В коробочке больше нет конфет. Остались лишь сладкий аромат и картон.
+  components:
+  - type: Sprite
+    sprite: _Aizark/Food/Candy/titan_candy.rsi
+    state: box_empty
+  - type: Item
+    size: Tiny
+    shape:
+    - 0,0,0,1
+  - type: StaticPrice
+    price: 0
+
+- type: entityTable
+  id: AizarkTitanCandyAssortment
+  table: !type:GroupSelector
+    children:
+    - id: FoodAizarkTitanCandyRed
+      weight: 30
+    - id: FoodAizarkTitanCandyOrange
+      weight: 30
+    - id: FoodAizarkTitanCandyGreen
+      weight: 15
+    - id: FoodAizarkTitanCandyBlue
+      weight: 15
+    - id: FoodAizarkTitanCandyPurple
+      weight: 8
+    - id: FoodAizarkTitanCandyYellow
+      weight: 2

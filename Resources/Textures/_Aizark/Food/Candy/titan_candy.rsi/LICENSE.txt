@@ -1,0 +1,50 @@
+Titan Candy Artwork — DeadSpace-Only Irrevocable License
+
+Copyright (c) 2026 Aizark (Discord: Aizark). All rights reserved.
+
+1. Permission for DeadSpace SS14
+
+Aizark grants the DeadSpace SS14 project at
+https://github.com/dead-space-server/dead-space-14
+a perpetual, worldwide, royalty-free, non-exclusive and IRREVOCABLE
+license to use, reproduce, modify, adapt, distribute and publicly
+display the Titan Candy artwork as part of that project.
+
+This permission covers the project's server, game client, asset
+distribution, updates, future versions, releases, and promotion of
+DeadSpace SS14. Contributors may work with the artwork when doing so
+on behalf of or solely for the DeadSpace SS14 project.
+
+2. No withdrawal
+
+Once granted, this permission cannot be withdrawn, terminated or
+revoked by Aizark merely because the author changes their mind,
+stops contributing, or no longer wishes to have the artwork used
+in DeadSpace SS14. The DeadSpace SS14 project may continue to use
+the artwork within the scope above without seeking renewed permission.
+
+3. Other projects require separate permission
+
+No permission is granted for other SS14 projects, independent servers,
+forks operated as separate projects, asset packs, unrelated games or
+products, including other projects run by the DeadSpace team.
+This restriction applies to both the original artwork and modified
+versions of it.
+
+Anyone wishing to use the artwork outside the DeadSpace SS14 project
+must contact Aizark (Discord: Aizark) to request separate permission.
+Requests are welcome, but permission is not automatic.
+
+The DeadSpace SS14 project may not sublicense the artwork for use
+outside the scope of this license.
+
+4. Attribution
+
+Artwork: Aizark (Discord: Aizark).
+Keep this notice with the source assets where practicable.
+
+5. Rights reserved
+
+This is a custom project-specific license, not an open-source or
+Creative Commons license. All rights not expressly granted are
+reserved by the copyright holder, subject to applicable law.

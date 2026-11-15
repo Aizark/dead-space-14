@@ -1,0 +1,11 @@
+# Дополнительный товар для платных автоматов Getmore (Backmen).
+- type: listing
+  id: AizarkTitanCandyBoxGetmorePaid
+  productEntity: FoodAizarkTitanCandyBoxClosed
+  cost:
+    SpaceCash: 10
+  categories:
+  - GetmoreChocolateCorpInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 6
